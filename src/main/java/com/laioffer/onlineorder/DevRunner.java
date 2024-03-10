@@ -3,9 +3,7 @@ package com.laioffer.onlineorder;
 import com.laioffer.onlineorder.entity.*;
 import com.laioffer.onlineorder.model.RestaurantDto;
 import com.laioffer.onlineorder.repository.*;
-import com.laioffer.onlineorder.service.CartService;
-import com.laioffer.onlineorder.service.MenuItemService;
-import com.laioffer.onlineorder.service.RestaurantService;
+import com.laioffer.onlineorder.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -28,6 +26,7 @@ public class DevRunner implements ApplicationRunner {
     private final CartService cartService;
     private final MenuItemService menuItemService;
     private final RestaurantService restaurantService;
+    private final CustomerService customerService;
 
     public DevRunner(
             CartRepository cartRepository,
@@ -37,7 +36,8 @@ public class DevRunner implements ApplicationRunner {
             RestaurantRepository restaurantRepository,
             CartService cartService,
             MenuItemService menuItemService,
-            RestaurantService restaurantService) {
+            RestaurantService restaurantService,
+            CustomerService customerService) {
         this.cartRepository = cartRepository;
         this.customerRepository = customerRepository;
         this.menuItemRepository = menuItemRepository;
@@ -46,6 +46,7 @@ public class DevRunner implements ApplicationRunner {
         this.cartService = cartService;
         this.menuItemService = menuItemService;
         this.restaurantService = restaurantService;
+        this.customerService = customerService;
     }
 
     @Override
@@ -120,5 +121,7 @@ public class DevRunner implements ApplicationRunner {
         cartService.clearCart(1L);
 
         logger.info(cartService.getCart(1L).toString());
+
+        customerService.signUp("foo@mail.com", "123456", "Foo", "Bar");
     }
 }
